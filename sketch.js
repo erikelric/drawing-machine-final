@@ -1,6 +1,11 @@
 let array = [];
 let strokeWidth = 5;
 let colorPicker;
+let colorPicker1;
+let button;
+// let controlDiv;
+let gf;
+let gb;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -8,55 +13,76 @@ function setup() {
 
   strokeWeight(5);
 
-    // colorPicker = createColorPicker('#ed225d');
-    // colorPicker.position(0, height + 5);
+  colorPicker = createColorPicker('#ed225d');
+  colorPicker.parent("controls")
+
+  colorPicker1 = createColorPicker('#ed225d');
+  colorPicker1.parent("controls")
+
+  gf = createGraphics(width, height);
+  gb = createGraphics(width, height);
+
+  // button = createButton("hide");
+  // button.mousePressed(toggleVis);
+  //
+  // controlDiv = select("#controls");
 
 }
 
 
 function draw() {
 
-  // background(colorPicker.color());
-  background(220, 5);
-  strokeWeight(strokeWidth);
+  gb.background(colorPicker1.color());
+  // background(colorPicker1.color());
+  gf.stroke(colorPicker.color());
 
-if (mouseIsPressed){
-  // line(mouseX, mouseY, pmouseX, pmouseY);
-  // stroke(map(mouseX, 0, 600, 0, 255, true))
+  // background(220, 5);
+  gf.strokeWeight(strokeWidth);
 
-  //Symmetric drawing
-  // ellipse(mouseX, mouseY, 4, 4);
+  if (mouseIsPressed) {
+    // line(mouseX, mouseY, pmouseX, pmouseY);
+    // stroke(map(mouseX, 0, 600, 0, 255, true))
 
-  // ellipse(mouseX, height - mouseY, 4, 4);
-  // ellipse(width - mouseX, mouseY, 4, 4);
-  // ellipse(width - mouseX, height - mouseY, 4, 4);
+    //Symmetric drawing
+    // ellipse(mouseX, mouseY, 4, 4);
 
-  // array.push([mouseX, mouseY]);
+    // ellipse(mouseX, height - mouseY, 4, 4);
+    // ellipse(width - mouseX, mouseY, 4, 4);
+    // ellipse(width - mouseX, height - mouseY, 4, 4);
 
-  line(mouseX, mouseY, pmouseX, pmouseY);
-  line(width - mouseX, mouseY, width - pmouseX, pmouseY);
+    // array.push([mouseX, mouseY]);
+
+    gf.line(mouseX, mouseY, pmouseX, pmouseY);
+    gf.line(width - mouseX, mouseY, width - pmouseX, pmouseY);
 
   }
 
+  image(gb, 0, 0);
+  image(gf, 0, 0);
+
 }
 
-function keyTyped(){
+// function toggleVis() {
+//   controlDiv.hide();
+// }
 
-    if (key === `s`){
-      //save this image
-      saveCanvas(`fileName`, `png`);
-    } else if (key === 'c'){
-      // clear the image
-      background(255);
-      clear();
+function keyTyped() {
 
-      for(let i = 0; i < array.length; i++){
-        // line(array[i][0], array[i][1], array[i + 1][0], array[i + 1][1]);
-        curveVertex(array[i][0], array[i][1])
-      }
-      endShape();
+  if (key === `s`) {
+    //save this image
+    saveCanvas(`fileName`, `png`);
+  } else if (key === 'c') {
+    // clear the image
+    background(255);
+    clear();
 
+    for (let i = 0; i < array.length; i++) {
+      // line(array[i][0], array[i][1], array[i + 1][0], array[i + 1][1]);
+      curveVertex(array[i][0], array[i][1])
     }
+    endShape();
 
-    return false;
+  }
+
+  return false;
 }
